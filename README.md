@@ -1,134 +1,142 @@
-🎙️ Voice Translator Web App (English → Hindi)
-This is a speech-based real-time voice translator built with Flask and Python. It allows you to speak in English, recognizes the voice, and translates the speech into Hindi, all through a beautiful, modern web interface.
+# Voice-to-Voice Translator — English to Hindi
 
-Perfect for quick translation, language learning, or communication.
+A speech translation project that converts spoken English into Hindi text and then synthesizes the translated result back into speech.
 
-🚀 Features
-🎤 Speech Recognition using speech_recognition
+The repository contains both a **Flask browser interface** and a **command-line audio pipeline**.
 
-🌐 Translation from English to Hindi using googletrans
+## Web App Flow
 
-⚡ Instant Response without page reload
+```text
+Browser microphone
+      │
+      ▼
+5-second audio recording
+      │
+      ▼
+Flask upload
+      │
+      ▼
+OpenAI Whisper transcription
+      │
+      ▼
+English text
+      │
+      ▼
+English → Hindi translation
+      │
+      ▼
+gTTS Hindi speech
+      │
+      ▼
+Browser audio playback
+```
 
-🧠 Smart Language Detection using langdetect
+## Features
 
-🎨 Sleek UI with dark mode, glassmorphism, and animation
+- Browser microphone recording
+- English speech transcription
+- English-to-Hindi translation
+- Hindi text-to-speech generation
+- Automatic audio playback
+- Glassmorphism-style Flask UI
+- Separate CLI translation pipeline
 
-🖱️ One-click "Speak Now" button
+## Tech Stack
 
-🪪 Built on Flask – lightweight and fast
+### Web App
 
-🖼️ UI Preview
-<!<img width="1914" height="876" alt="Screenshot 2025-07-28 145807" src="https://github.com/user-attachments/assets/5629459b-645a-4a94-beb2-2cdbcc05139c" />
--->
+- Python
+- Flask
+- OpenAI Whisper
+- googletrans
+- gTTS
+- HTML / CSS / JavaScript
+- Browser MediaRecorder API
 
-📂 Project Folder Structure
-csharp
-Copy
-Edit
-voice_translator/
-│
-├── app.py                 # Main Flask application
-├── templates/
-│   └── index.html         # Frontend HTML + CSS (inline)
-├── static/
-│   ├── favicon.ico        # Optional icon
-│   └── app_preview.png    # UI Screenshot (optional)
-└── README.md              # This file
-🛠️ Installation Guide
-1. 📥 Clone the Repository
-bash
-Copy
-Edit
-git clone https://github.com/<your-username>/voice_translator.git
-cd voice_translator
-2. 🐍 Create Virtual Environment (Optional but Recommended)
-bash
-Copy
-Edit
-python -m venv venv
-venv\Scripts\activate   # On Windows
+### CLI Pipeline
 
-# OR
+- sounddevice
+- SciPy
+- OpenAI Whisper
+- Hugging Face Transformers
+- MarianMT (`Helsinki-NLP/opus-mt-en-hi`)
+- gTTS
+- playsound
 
-source venv/bin/activate  # On Linux/Mac
-3. 📦 Install Dependencies
-bash
-Copy
-Edit
-pip install -r requirements.txt
-If you don’t have a requirements.txt, install manually:
+## Project Structure
 
-bash
-Copy
-Edit
-pip install Flask SpeechRecognition googletrans==4.0.0-rc1 langdetect
-🧪 How to Run
-bash
-Copy
-Edit
+```text
+Voice-to-Voice-Translator/
+├── app.py
+├── main.py
+├── audio_input.py
+├── whisper_model.py
+├── translation.py
+├── tts_output.py
+├── input.wav
+├── output.mp3
+└── README.md
+```
+
+## Installation
+
+Create a virtual environment:
+
+```bash
+python -m venv .venv
+```
+
+Activate it and install the main packages:
+
+```bash
+pip install flask openai-whisper googletrans==4.0.0-rc1 gTTS soundfile sounddevice scipy transformers sentencepiece playsound torch
+```
+
+Whisper also requires **FFmpeg** to be installed and available on your system path.
+
+## Run the Web App
+
+```bash
 python app.py
-Then open your browser and visit:
-👉 http://localhost:5000
+```
 
-🎮 Usage Instructions
-Press the "Speak Now" button.
+Open:
 
-Say something in English.
+```text
+http://127.0.0.1:7860
+```
 
-The app will:
+Click **Speak Now**, allow microphone access, and speak in English.
 
-Convert speech to text
+The application records a short audio sample, transcribes it, translates it to Hindi, generates Hindi speech, and plays the output.
 
-Auto-detect language
+## Run the CLI Pipeline
 
-Translate to Hindi
+```bash
+python main.py
+```
 
-Show the translated output instantly
+The CLI version:
 
-📌 Current Capabilities
-From Language	To Language	Status
-English	Hindi	✅ Working
-Hindi	English	❌ Not Yet
+1. records microphone audio
+2. transcribes it with Whisper
+3. translates it with MarianMT
+4. generates Hindi speech with gTTS
+5. plays the resulting audio
 
-🔄 Future updates will include bi-directional translation and language selector.
+## Current Scope
 
-🧩 Dependencies
-Flask – Web framework (Backend)
+The current project is centered on **English → Hindi** translation.
 
-SpeechRecognition – Convert speech to text
+## Limitations
 
-googletrans – Google Translate wrapper
+- Translation and gTTS paths require internet connectivity.
+- Whisper model loading can take time on the first run.
+- Browser microphone access requires user permission.
+- This is a prototype rather than a low-latency streaming speech-to-speech system.
 
-langdetect – Detect spoken language automatically
+## Author
 
-🤝 Contributing
-Pull requests are welcome! If you'd like to:
+**Sankalp Gupta**
 
-Add more language pairs
-
-Improve UI
-
-Add browser/mobile support
-
-Optimize performance
-
-👉 Create an issue or fork and submit a PR.
-
-💡 Future Plans
-🔄 Hindi → English support
-
-🌐 Multi-language dropdown
-
-📱 Mobile responsive view
-
-💾 Translation history saving
-
-🎙️ Real-time microphone waveform
-
-👨‍💻 Author
-Sankalp Gupta
-📧 csjma22001390321csemockai@csjmu.ac.in
-
-📃 License
-This project is open source and free to use under the MIT License.
+GitHub: https://github.com/Sankalp-gupta1
