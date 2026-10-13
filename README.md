@@ -30,7 +30,6 @@ A speech translation project with both a local AI pipeline and a deployable brow
 
 ## Live app
 
-**https://voice-translator-sankalp.vercel.app/**
 
 ## Original local version
 
