@@ -1,142 +1,55 @@
-# Voice-to-Voice Translator — English to Hindi
+# Voice-to-Voice Translator
 
-A speech translation project that converts spoken English into Hindi text and then synthesizes the translated result back into speech.
+A speech translation project with both a local AI pipeline and a deployable browser version.
 
-The repository contains both a **Flask browser interface** and a **command-line audio pipeline**.
+## Live app
 
-## Web App Flow
+**https://voice-translator-sankalp.vercel.app/**
 
-```text
-Browser microphone
-      │
-      ▼
-5-second audio recording
-      │
-      ▼
-Flask upload
-      │
-      ▼
-OpenAI Whisper transcription
-      │
-      ▼
-English text
-      │
-      ▼
-English → Hindi translation
-      │
-      ▼
-gTTS Hindi speech
-      │
-      ▼
-Browser audio playback
-```
+## Original local version
 
-## Features
+The Python files use:
 
-- Browser microphone recording
-- English speech transcription
-- English-to-Hindi translation
-- Hindi text-to-speech generation
-- Automatic audio playback
-- Glassmorphism-style Flask UI
-- Separate CLI translation pipeline
-
-## Tech Stack
-
-### Web App
-
-- Python
 - Flask
 - OpenAI Whisper
-- googletrans
+- Google Translate wrapper
 - gTTS
-- HTML / CSS / JavaScript
-- Browser MediaRecorder API
+- local audio recording / playback
 
-### CLI Pipeline
+That version remains available for local experimentation.
 
-- sounddevice
-- SciPy
-- OpenAI Whisper
-- Hugging Face Transformers
-- MarianMT (`Helsinki-NLP/opus-mt-en-hi`)
-- gTTS
-- playsound
+## Deployed browser version
 
-## Project Structure
+The `web/` version uses:
 
-```text
-Voice-to-Voice-Translator/
-├── app.py
-├── main.py
-├── audio_input.py
-├── whisper_model.py
-├── translation.py
-├── tts_output.py
-├── input.wav
-├── output.mp3
-└── README.md
-```
+- Web Speech API for speech recognition,
+- MyMemory for text translation,
+- browser speech synthesis for playback.
 
-## Installation
+It supports English, Hindi, Spanish, French and German in the live UI.
 
-Create a virtual environment:
+No private API key is required.
+
+## Browser support
+
+Chrome and Edge generally provide the best speech-recognition support.
+
+If microphone recognition is unavailable, you can type text manually and still use translation and speech playback.
+
+## Run locally
 
 ```bash
-python -m venv .venv
+cd web
+python -m http.server 8000
 ```
 
-Activate it and install the main packages:
+Open `http://localhost:8000`.
 
-```bash
-pip install flask openai-whisper googletrans==4.0.0-rc1 gTTS soundfile sounddevice scipy transformers sentencepiece playsound torch
-```
+## Privacy note
 
-Whisper also requires **FFmpeg** to be installed and available on your system path.
-
-## Run the Web App
-
-```bash
-python app.py
-```
-
-Open:
-
-```text
-http://127.0.0.1:7860
-```
-
-Click **Speak Now**, allow microphone access, and speak in English.
-
-The application records a short audio sample, transcribes it, translates it to Hindi, generates Hindi speech, and plays the output.
-
-## Run the CLI Pipeline
-
-```bash
-python main.py
-```
-
-The CLI version:
-
-1. records microphone audio
-2. transcribes it with Whisper
-3. translates it with MarianMT
-4. generates Hindi speech with gTTS
-5. plays the resulting audio
-
-## Current Scope
-
-The current project is centered on **English → Hindi** translation.
-
-## Limitations
-
-- Translation and gTTS paths require internet connectivity.
-- Whisper model loading can take time on the first run.
-- Browser microphone access requires user permission.
-- This is a prototype rather than a low-latency streaming speech-to-speech system.
+The browser handles speech recognition / synthesis according to its own speech services. Text is sent to the translation API only when translation is requested.
 
 ## Author
 
-**Sankalp Gupta**
-
+Sankalp Gupta  
 GitHub: https://github.com/Sankalp-gupta1
