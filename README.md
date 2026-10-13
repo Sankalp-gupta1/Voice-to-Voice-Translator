@@ -1,5 +1,31 @@
 # Voice-to-Voice Translator
 
+## Live app
+
+**https://voice-to-voice-translator.vercel.app/**
+
+The original local pipeline uses Whisper for speech recognition and gTTS for speech output.
+
+The hosted browser version in `web/` removes the heavyweight server requirement and supports:
+
+- browser speech recognition where supported,
+- typed-text fallback,
+- English, Hindi, Spanish, French and German options,
+- translation through a public translation endpoint,
+- browser speech synthesis for translated output,
+- source/target language swapping.
+
+Browser speech-recognition support varies by browser, but typed translation remains usable.
+
+### Run locally
+
+```bash
+cd web
+python -m http.server 8000
+```
+
+---
+
 A speech translation project with both a local AI pipeline and a deployable browser version.
 
 ## Live app
